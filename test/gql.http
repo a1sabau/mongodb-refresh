@@ -1,0 +1,132 @@
+### GetProduct by _id via $lookup
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query ($_id: String!) {
+  GetProductByLookup (_id: $_id ) {
+     name
+  }
+}
+
+{
+  "_id": "65b90d9bc37bf43a7efcbece"
+}
+
+
+### GetProduct by _id via populate
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query ($_id: String!) {
+  GetProductByPopulate (_id: $_id ) {
+     name
+  }
+}
+
+{
+  "_id": "65b90d9bc37bf43a7efcbece"
+}
+
+
+### GetProducts
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+  GetProducts {
+     name,
+     producer {
+        _id
+     }
+  }
+}
+
+
+### Create product, returns the product
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($data: CreateProductInput!){
+  CreateProduct(data: $data) {
+    _id,
+    name
+  }
+}
+
+{
+  "data": {
+  	"name": "prodB",
+    "vintage": "2020",
+    "producer": "65b90d9bc37bf43a7efcbecc"
+    }
+}
+
+### Create products, returns a list of ordered ObjectId
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($data: [CreateProductInput!]!) {
+  CreateProducts(data: $data) 
+}
+
+{
+  "data": {
+  	"name": "prodB",
+    "vintage": "2020",
+    "producer": "65b90d9bc37bf43a7efcbecc"
+    }
+}
+
+
+### Update product, returns the updated product
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($data: UpdateProductInput!) {
+  UpdateProduct(data: $data) {
+    name
+  }
+}
+
+{
+  "data": {
+      "name": "prodX7",
+      "vintage": "2020",
+      "_id": "65ba6965bfa1175d0a5387b4"
+    }
+}
+
+
+### Delete products, returns mongo.DeleteResult deleteCount
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($ids: [ObjectID!]!) {
+  DeleteProducts (ids: $ids ) 
+}
+
+{
+  "ids": [
+    "65ba70759f142fab85895dfa"
+  ]
+}
+
+
+### CSV Sync, returns true if no sync is in progress, false otherwise
+POST http://localhost:3000/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation {
+  Sync
+}
+
+
+
