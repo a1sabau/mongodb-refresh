@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
+    "lint": "eslint src --ext .ts",
     "start": "ts-node src/app.ts",
     "watch": "nodemon -w src --ext ts --exec ts-node src/app.ts",
     "debug": "nodemon --exec \"node --inspect-brk=0.0.0.0:9229 --require ts-node/register src/app.ts\""
